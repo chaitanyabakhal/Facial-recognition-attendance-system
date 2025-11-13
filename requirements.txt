@@ -2,11 +2,9 @@ werkzeug>=2.0.1
 flask-wtf>=0.15.1
 wtforms>=2.3.3
 gunicorn
-tensorflow==2.12.0
+tensorflow==2.20.0
 tf-keras
-deepface==0.0.93
+deepface
 opencv-python-headless
-gunicorn
 flask
-numpy==1.23.5
 pillow
