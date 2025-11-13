@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="600px" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Facial Recognition</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <!-- Background Circle -->
+        <circle fill="#F0F4FF" cx="400" cy="300" r="250"></circle>
+        
+        <!-- Face Outline -->
+        <path d="M400,150 C500,150 580,230 580,330 C580,430 500,510 400,510 C300,510 220,430 220,330 C220,230 300,150 400,150 Z" stroke="#4A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        
+        <!-- Eyes -->
+        <circle fill="#4A6BFF" cx="340" cy="280" r="15"></circle>
+        <circle fill="#4A6BFF" cx="460" cy="280" r="15"></circle>
+        
+        <!-- Nose -->
+        <path d="M400,300 L400,350 M380,350 L420,350" stroke="#4A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        
+        <!-- Mouth -->
+        <path d="M350,400 C365,420 435,420 450,400" stroke="#4A6BFF" stroke-width="4" stroke-linecap="round"></path>
+        
+        <!-- Facial Recognition Points -->
+        <circle fill="#FF6B6B" cx="340" cy="280" r="3"></circle>
+        <circle fill="#FF6B6B" cx="460" cy="280" r="3"></circle>
+        <circle fill="#FF6B6B" cx="400" cy="330" r="3"></circle>
+        <circle fill="#FF6B6B" cx="350" cy="400" r="3"></circle>
+        <circle fill="#FF6B6B" cx="450" cy="400" r="3"></circle>
+        <circle fill="#FF6B6B" cx="300" cy="250" r="3"></circle>
+        <circle fill="#FF6B6B" cx="500" cy="250" r="3"></circle>
+        <circle fill="#FF6B6B" cx="320" cy="220" r="3"></circle>
+        <circle fill="#FF6B6B" cx="480" cy="220" r="3"></circle>
+        <circle fill="#FF6B6B" cx="400" cy="200" r="3"></circle>
+        <circle fill="#FF6B6B" cx="350" cy="350" r="3"></circle>
+        <circle fill="#FF6B6B" cx="450" cy="350" r="3"></circle>
+        <circle fill="#FF6B6B" cx="300" cy="330" r="3"></circle>
+        <circle fill="#FF6B6B" cx="500" cy="330" r="3"></circle>
+        <circle fill="#FF6B6B" cx="320" cy="450" r="3"></circle>
+        <circle fill="#FF6B6B" cx="480" cy="450" r="3"></circle>
+        <circle fill="#FF6B6B" cx="400" cy="470" r="3"></circle>
+        
+        <!-- Connection Lines -->
+        <path d="M340,280 L460,280 M340,280 L400,330 M460,280 L400,330 M400,330 L350,400 M400,330 L450,400 M350,400 L450,400 M300,250 L340,280 M460,280 L500,250 M320,220 L340,280 M460,280 L480,220 M400,200 L340,280 M400,200 L460,280 M350,350 L400,330 M450,350 L400,330 M300,330 L350,400 M450,400 L500,330 M320,450 L350,400 M450,400 L480,450 M400,470 L350,400 M400,470 L450,400" stroke="#FF6B6B" stroke-width="1" stroke-dasharray="3,3"></path>
+        
+        <!-- Scanning Effect -->
+        <path d="M220,250 L580,250" stroke="#4A6BFF" stroke-width="2" stroke-linecap="round" opacity="0.6">
+            <animate attributeName="y" from="250" to="410" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3s" repeatCount="indefinite" />
+        </path>
+        
+        <!-- Corner Brackets -->
+        <path d="M250,180 L250,200 L270,200" stroke="#4A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M550,180 L550,200 L530,200" stroke="#4A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M250,480 L250,460 L270,460" stroke="#4A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M550,480 L550,460 L530,460" stroke="#4A6BFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+    </g>
+</svg>

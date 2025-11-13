@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Students - Facial Recognition Attendance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Facial Recognition Attendance System</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('register') }}">Register Student</a></li>
+          <li><a href="{{ url_for('take_attendance') }}">Take Attendance</a></li>
+          <li><a href="{{ url_for('view_attendance') }}">View Attendance</a></li>
+          <li><a href="{{ url_for('students') }}" class="active">Manage Students</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="students-section">
+        <h2>Registered Students</h2>
+
+        <div class="search-container">
+          <input type="text" id="student-search" placeholder="Search by name or roll number" class="search-filter">
+        </div>
+
+        <div class="table-container">
+          <table class="students-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Roll Number</th>
+                <th>Department</th>
+                <th>Year</th>
+                <th>Photo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if students %}
+                {% for student in students %}
+                  <tr data-name="{{ student.name|lower }}" data-roll="{{ student.roll_number|lower }}">
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.roll_number }}</td>
+                    <td>{{ student.department }}</td>
+                    <td>{{ student.year }}</td>
+                    <td>
+                      {% if student.image_path %}
+                        <img src="{{ '/' + student.image_path if not student.image_path.startswith('/') else student.image_path }}" alt="{{ student.name }}" class="student-thumbnail">
+                      {% else %}
+                        —
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="5" class="no-records">No students registered yet</td></tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer><p>&copy; 2025 Facial Recognition Attendance System</p></footer>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('student-search');
+    const rows = document.querySelectorAll('.students-table tbody tr');
+    searchInput.addEventListener('input', function() {
+      const q = (this.value || '').toLowerCase();
+      rows.forEach(row => {
+        if (row.classList.contains('no-records')) return;
+        const n = row.getAttribute('data-name');
+        const r = row.getAttribute('data-roll');
+        row.style.display = (!q || n.includes(q) || r.includes(q)) ? '' : 'none';
+      });
+    });
+  });
+  </script>
+</body>
+</html>

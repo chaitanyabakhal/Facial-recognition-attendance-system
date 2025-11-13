@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Attendance - Facial Recognition Attendance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Facial Recognition Attendance System</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('register') }}">Register Student</a></li>
+          <li><a href="{{ url_for('take_attendance') }}" class="active">Take Attendance</a></li>
+          <li><a href="{{ url_for('view_attendance') }}">View Attendance</a></li>
+          <li><a href="{{ url_for('students') }}">Manage Students</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="camera-section">
+        <h2>Take Attendance</h2>
+        <div class="camera-container">
+          <video id="video" width="640" height="480" autoplay playsinline></video>
+          <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+          <div class="camera-controls">
+            <button id="capture-btn" class="btn primary">Capture & Mark Attendance</button>
+          </div>
+        </div>
+        <div id="result" class="result-container"></div>
+      </section>
+    </main>
+
+    <footer><p>&copy; 2025 Facial Recognition Attendance System</p></footer>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureBtn = document.getElementById('capture-btn');
+    const resultDiv = document.getElementById('result');
+    const ctx = canvas.getContext('2d');
+
+    if (navigator.mediaDevices?.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => { video.srcObject = stream; })
+        .catch(err => {
+          console.error(err);
+          resultDiv.innerHTML = '<div class="alert error">Camera error. Use HTTPS/localhost and allow permission.</div>';
+        });
+    } else {
+      resultDiv.innerHTML = '<div class="alert error">Your browser does not support webcam access.</div>';
+    }
+
+    captureBtn.addEventListener('click', function() {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = canvas.toDataURL('image/jpeg');
+      resultDiv.innerHTML = '<div class="alert info">Processing... Please wait.</div>';
+
+      fetch('/process_attendance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageData }),
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          resultDiv.innerHTML = `<div class="alert success">${data.message}</div>`;
+        } else {
+          resultDiv.innerHTML = `<div class="alert error">${data.message}</div>`;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        resultDiv.innerHTML = '<div class="alert error">An error occurred while processing the request.</div>';
+      });
+    });
+  });
+  </script>
+</body>
+</html>

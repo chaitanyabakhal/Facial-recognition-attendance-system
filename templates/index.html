@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Recognition Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Facial Recognition Attendance System</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}" class="active">Home</a></li>
+                    <li><a href="{{ url_for('register') }}">Register Student</a></li>
+                    <li><a href="{{ url_for('take_attendance') }}">Take Attendance</a></li>
+                    <li><a href="{{ url_for('view_attendance') }}">View Attendance</a></li>
+                    <li><a href="{{ url_for('students') }}">Manage Students</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Welcome to the Digital Facial Recognition Attendance System</h2>
+                    <p>An efficient and modern way to track student attendance using facial recognition technology</p>
+                    <div class="action-buttons">
+                        <a href="{{ url_for('register') }}" class="btn primary">Register New Student</a>
+                        <a href="{{ url_for('take_attendance') }}" class="btn secondary">Take Attendance</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="{{ url_for('static', filename='images/facial-recognition.svg') }}" alt="Facial Recognition Illustration">
+                </div>
+            </section>
+            
+            <section class="features">
+                <h2>Features</h2>
+                <div class="feature-cards">
+                    <div class="card">
+                        <div class="card-icon">📝</div>
+                        <h3>Easy Registration</h3>
+                        <p>Register students with their details and facial data in seconds</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">👤</div>
+                        <h3>Face Recognition</h3>
+                        <p>Advanced facial recognition technology for accurate identification</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⏱️</div>
+                        <h3>Real-time Attendance</h3>
+                        <p>Mark attendance instantly with just a facial scan</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📊</div>
+                        <h3>Detailed Reports</h3>
+                        <p>Access and export attendance reports with ease</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Facial Recognition Attendance System</p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

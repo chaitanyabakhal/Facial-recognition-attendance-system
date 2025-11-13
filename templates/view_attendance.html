@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Attendance - Facial Recognition Attendance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Facial Recognition Attendance System</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('register') }}">Register Student</a></li>
+          <li><a href="{{ url_for('take_attendance') }}">Take Attendance</a></li>
+          <li><a href="{{ url_for('view_attendance') }}" class="active">View Attendance</a></li>
+          <li><a href="{{ url_for('students') }}">Manage Students</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="attendance-section">
+        <h2>Attendance Records</h2>
+
+        <div class="filter-controls">
+          <input type="date" id="date-filter" class="date-filter">
+          <input type="text" id="search-filter" placeholder="Search by name or roll number" class="search-filter">
+        </div>
+
+        <div class="table-container">
+          <table class="attendance-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Roll Number</th>
+                <th>Department</th>
+                <th>Year</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if attendance_records %}
+                {% for record in attendance_records %}
+                  <tr data-date="{{ record.date }}" data-name="{{ record.name|lower }}" data-roll="{{ record.roll_number|lower }}">
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.roll_number }}</td>
+                    <td>{{ record.department }}</td>
+                    <td>{{ record.year }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.time }}</td>
+                    <td><span class="status present">Present</span></td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="7" class="no-records">No attendance records found</td></tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="export-controls">
+          <button id="export-csv" class="btn secondary">Export to CSV</button>
+        </div>
+      </section>
+    </main>
+
+    <footer><p>&copy; 2025 Facial Recognition Attendance System</p></footer>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const dateFilter = document.getElementById('date-filter');
+    const searchFilter = document.getElementById('search-filter');
+    const exportBtn = document.getElementById('export-csv');
+    const tableRows = document.querySelectorAll('.attendance-table tbody tr');
+
+    function filterRecords() {
+      const dateValue = dateFilter.value;
+      const searchValue = (searchFilter.value || '').toLowerCase();
+
+      tableRows.forEach(row => {
+        if (row.classList.contains('no-records')) return;
+        const rowDate = row.getAttribute('data-date');
+        const rowName = row.getAttribute('data-name');
+        const rowRoll = row.getAttribute('data-roll');
+
+        const dateMatch = !dateValue || rowDate === dateValue;
+        const searchMatch = !searchValue || rowName.includes(searchValue) || rowRoll.includes(searchValue);
+
+        row.style.display = (dateMatch && searchMatch) ? '' : 'none';
+      });
+    }
+
+    dateFilter.addEventListener('change', filterRecords);
+    searchFilter.addEventListener('input', filterRecords);
+
+    exportBtn.addEventListener('click', function() {
+      let csvContent = "Name,Roll Number,Department,Year,Date,Time,Status\n";
+      document.querySelectorAll('.attendance-table tbody tr').forEach(row => {
+        if (row.style.display === 'none' || row.classList.contains('no-records')) return;
+        const cells = row.querySelectorAll('td');
+        const rowData = Array.from(cells).map(cell => `"${cell.innerText}"`).join(',');
+        csvContent += rowData + '\n';
+      });
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'attendance_report.csv';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    });
+  });
+  </script>
+</body>
+</html>
