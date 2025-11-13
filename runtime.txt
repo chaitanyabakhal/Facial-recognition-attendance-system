@@ -1,4 +1,1 @@
-# 1. बनवा runtime.txt मध्ये python-3.11 लिहून
-echo python-3.11 > runtime.txt
-
-
+python-3.11
