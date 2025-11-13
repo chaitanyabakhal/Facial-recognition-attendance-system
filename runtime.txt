@@ -1,0 +1,7 @@
+# 1. बनवा runtime.txt मध्ये python-3.11 लिहून
+echo python-3.11 > runtime.txt
+
+# 2. stage, commit आणि push करा
+git add runtime.txt requirements.txt
+git commit -m "Specify Python 3.11 runtime for Render; pin deps for TF 2.12"
+git push
